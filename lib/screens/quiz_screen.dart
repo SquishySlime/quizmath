@@ -8,8 +8,7 @@ class QuizScreen extends StatefulWidget {
   final String mode;
   final String? difficulty; // Tingkat kesulitan untuk mode biasa
 
-  const QuizScreen({Key? key, required this.mode, this.difficulty})
-    : super(key: key);
+  const QuizScreen({super.key, required this.mode, this.difficulty});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -276,7 +275,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                     if (_userName != null && _userName!.isNotEmpty)
                       Text(
-                        'Nama: _userName',
+                        'Nama: $_userName',
                         style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
                       ),
                     const SizedBox(height: 16),

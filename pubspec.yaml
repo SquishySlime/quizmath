@@ -1,8 +1,8 @@
-name: mathquizz
+name: learnmath
 description: "A new Flutter project."
 publish_to: 'none' 
 
-version: 1.0.0+1
+version: 1.2.0+1
 
 environment:
   sdk: ^3.7.0
@@ -13,10 +13,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.2.2
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^5.0.0
 
 flutter:
@@ -24,3 +26,7 @@ flutter:
   assets:
     - assets/images/logo.png
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"

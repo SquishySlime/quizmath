@@ -6,16 +6,16 @@ class ResultScreen extends StatefulWidget {
   final int total;
   final String explanation;
 
-  const ResultScreen({Key? key, required this.score, required this.total, required this.explanation}) : super(key: key);
+  const ResultScreen({super.key, required this.score, required this.total, required this.explanation});
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  List<Map<String, dynamic>> _scores = [];
+  final List<Map<String, dynamic>> _scores = [];
   String? _userName;
-  bool _isTopScore = false;
+  final bool _isTopScore = false;
 
 
 

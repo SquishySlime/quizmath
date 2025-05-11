@@ -1,4 +1,4 @@
-# mathquizz
+# LearnMath
 
 A new Flutter project.
 

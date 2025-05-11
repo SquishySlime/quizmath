@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'screens/leaderboard_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/splash_screen.dart';
+import 'screens/learning_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+ // notifikasi jam 20:00
   runApp(const MathQuizApp());
 }
 
 class MathQuizApp extends StatefulWidget {
-  const MathQuizApp({Key? key}) : super(key: key);
+  const MathQuizApp({super.key});
 
   @override
   State<MathQuizApp> createState() => _MathQuizAppState();
@@ -26,17 +30,15 @@ class _MathQuizAppState extends State<MathQuizApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Math Quiz',
+      title: 'Learn Math',
       theme: ThemeData.light().copyWith(
         primaryColor: Colors.deepPurple,
         colorScheme: ColorScheme.light(
           primary: Colors.deepPurple,
           secondary: Colors.amber,
-          background: Color(0xFFF8F8FA),
-          surface: Colors.white,
+          surface: Color(0xFFF8F8FA),
           onPrimary: Colors.white,
           onSecondary: Colors.black,
-          onBackground: Colors.black,
           onSurface: Colors.black,
         ),
         scaffoldBackgroundColor: const Color(0xFFF8F8FA),
@@ -68,11 +70,9 @@ class _MathQuizAppState extends State<MathQuizApp> {
         colorScheme: ColorScheme.dark(
           primary: Colors.deepPurple,
           secondary: Colors.amber,
-          background: Color(0xFF181829),
           surface: Color(0xFF232336),
           onPrimary: Colors.white,
           onSecondary: Colors.black,
-          onBackground: Colors.white,
           onSurface: Colors.white,
         ),
         scaffoldBackgroundColor: const Color(0xFF181829),
@@ -105,6 +105,7 @@ class _MathQuizAppState extends State<MathQuizApp> {
         '/': (context) => const SplashScreen(),
         '/home': (context) => HomeScreen(onThemeChanged: _changeTheme, currentThemeMode: _themeMode),
         '/leaderboard': (context) => const LeaderboardScreen(),
+        '/learning': (context) => const LearningScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

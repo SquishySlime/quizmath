@@ -1,6 +1,6 @@
 {
-    "name": "mathquizz",
-    "short_name": "mathquizz",
+    "name": "LearnMath",
+    "short_name": "LearnMath",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

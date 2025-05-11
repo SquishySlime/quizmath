@@ -5,7 +5,7 @@ class HomeScreen extends StatefulWidget {
   final void Function(ThemeMode) onThemeChanged;
   final ThemeMode currentThemeMode;
 
-  const HomeScreen({Key? key, required this.onThemeChanged, required this.currentThemeMode}) : super(key: key);
+  const HomeScreen({super.key, required this.onThemeChanged, required this.currentThemeMode});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Math Quiz'), centerTitle: true),
+      appBar: AppBar(title: const Text('Learn Math'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
@@ -29,15 +29,90 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 30),
               Text(
-                'Pilih Mode Permainan',
+                'Selamat Datang di LearnMath',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white),
               ),
               const SizedBox(height: 30),
-              ModeButton(label: 'Normal', mode: 'normal'),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.school),
+                label: const Text('Belajar'),
+                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                onPressed: () => Navigator.pushNamed(context, '/learning'),
+              ),
               const SizedBox(height: 16),
-              ModeButton(label: 'Challenge', mode: 'challenge'),
-              const SizedBox(height: 16),
-              ModeButton(label: 'Arcade', mode: 'arcade'),
+              // Quiz dengan pemilihan tingkat kesulitan
+              ElevatedButton.icon(
+                icon: const Icon(Icons.quiz),
+                label: const Text('Quiz'),
+                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                onPressed: () async {
+                  final difficulty = await showDialog<String>(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Pilih Tingkat Kesulitan'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: const Text('Mudah'),
+                              onTap: () => Navigator.pop(context, 'easy'),
+                            ),
+                            ListTile(
+                              title: const Text('Normal'),
+                              onTap: () => Navigator.pop(context, 'medium'),
+                            ),
+                            ListTile(
+                              title: const Text('Sulit'),
+                              onTap: () => Navigator.pop(context, 'hard'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                  if (!mounted) return;
+                  if (difficulty != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => QuizScreen(mode: 'normal', difficulty: difficulty),
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 24),
+              // Challenge Mode
+              ElevatedButton.icon(
+                icon: const Icon(Icons.flash_on),
+                label: const Text('Challenge'),
+                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48), backgroundColor: Colors.redAccent),
+                onPressed: () {
+                  final ctx = context;
+                  Navigator.push(
+                    ctx,
+                    MaterialPageRoute(
+                      builder: (_) => QuizScreen(mode: 'challenge'),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              // Arcade Mode
+              ElevatedButton.icon(
+                icon: const Icon(Icons.sports_esports),
+                label: const Text('Arcade'),
+                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48), backgroundColor: Colors.green),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => QuizScreen(mode: 'arcade'),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 32),
               ElevatedButton.icon(
                 icon: const Icon(Icons.leaderboard),
@@ -45,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
                 onPressed: () => Navigator.pushNamed(context, '/leaderboard'),
               ),
+              const SizedBox(height: 32),
               // Pilihan Tema
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -82,77 +158,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class ModeButton extends StatelessWidget {
-  final String label;
-  final String mode;
-
-  const ModeButton({Key? key, required this.label, required this.mode})
-    : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size(double.infinity, 50),
-      ),
-      onPressed: () {
-        if (mode == 'normal') {
-          // Jika memilih mode biasa, berikan pilihan tingkat kesulitan
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Pilih Tingkat Kesulitan'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (_) => QuizScreen(mode: mode, difficulty: 'easy'),
-                        ),
-                      );
-                    },
-                    child: const Text('Mudah'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (_) =>
-                                  QuizScreen(mode: mode, difficulty: 'medium'),
-                        ),
-                      );
-                    },
-                    child: const Text('Sedang'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (_) => QuizScreen(mode: mode, difficulty: 'hard'),
-                        ),
-                      );
-                    },
-                    child: const Text('Sulit'),
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => QuizScreen(mode: mode)),
-          );
-        }
-      },
-      child: Text(label),
-    );
-  }
-}
